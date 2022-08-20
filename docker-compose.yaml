@@ -21,9 +21,17 @@ services:
       - frontend
     secrets:
       - default_password
-    ports:
-      - 8080:80
+    # Uncomment to expose port on host
+    # ports:
+    #   - 8080:80
     environment:
       PGADMIN_DEFAULT_EMAIL: ${DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/default_password
-      PGADMIN_DISABLE_POSTFIX: ${DISABLE_POSTFIX-false}
+      PGADMIN_DISABLE_POSTFIX: ${DISABLE_POSTFIX}
+      PGADMIN_CONFIG_MAIL_SERVER: ${MAIL_SERVER-"'localhost'"}
+      PGADMIN_CONFIG_MAIL_PORT: ${MAIL_PORT-25}
+      PGADMIN_CONFIG_MAIL_USE_SSL: ${MAIL_USE_SSL-False}
+      PGADMIN_CONFIG_MAIL_USE_TLS: ${MAIL_USE_TLS-False}
+      PGADMIN_CONFIG_MAIL_USERNAME: ${MAIL_USERNAME-"''"}
+      PGADMIN_CONFIG_MAIL_PASSWORD: ${MAIL_PASSWORD-"''"}
+      PGADMIN_CONFIG_SECURITY_EMAIL_SENDER: ${SECURITY_EMAIL_SENDER-"'no-reply@localhost'"}
