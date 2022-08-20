@@ -1,0 +1,29 @@
+secrets:
+  default_password:
+    file: ./secrets/default_password.txt
+
+volumes:
+  pgadmin:
+
+networks:
+  frontend:
+    external: ${DOCKER_PROXY_EXT-true}
+    name: ${DOCKER_PROXY_NETWORK-proxy}
+
+services:
+  pgadmin4:
+    image: dpage/pgadmin4:${IMAGE_TAG}
+    container_name: pgadmin
+    restart: unless-stopped
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    networks:
+      - frontend
+    secrets:
+      - default_password
+    ports:
+      - 8080:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/default_password
+      PGADMIN_DISABLE_POSTFIX: ${DISABLE_POSTFIX-false}
